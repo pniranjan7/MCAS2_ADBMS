@@ -1,0 +1,76 @@
+terminal 1
+
+university> show dbs
+admin       40.00 KiB
+college     72.00 KiB
+config      72.00 KiB
+inventory   72.00 KiB
+local       72.00 KiB
+test        40.00 KiB
+university  40.00 KiB
+university> db.dropDatabase()
+{ ok: 1, dropped: 'university' }
+university> use inventory
+switched to db inventory
+inventory> db.dropDatabase()
+{ ok: 1, dropped: 'inventory' }
+inventory> show dbs
+admin    40.00 KiB
+college  72.00 KiB
+config   72.00 KiB
+local    72.00 KiB
+test     40.00 KiB
+inventory> show dbs
+admin        40.00 KiB
+college      72.00 KiB
+config      108.00 KiB
+inventory     8.00 KiB
+local        72.00 KiB
+test         40.00 KiB
+university    8.00 KiB
+inventory>
+
+terminal 2 
+
+C:\Users\mlm\Desktop\backup>mongodump
+2025-04-29T14:33:14.422+0530    writing admin.system.version to dump\admin\system.version.bson
+2025-04-29T14:33:14.425+0530    done dumping admin.system.version (1 document)
+2025-04-29T14:33:14.426+0530    writing university.student to dump\university\student.bson
+2025-04-29T14:33:14.427+0530    writing college.class to dump\college\class.bson
+2025-04-29T14:33:14.427+0530    writing inventory.products to dump\inventory\products.bson
+2025-04-29T14:33:14.428+0530    writing test.products to dump\test\products.bson
+2025-04-29T14:33:14.431+0530    done dumping college.class (4 documents)
+2025-04-29T14:33:14.434+0530    done dumping inventory.products (3 documents)
+2025-04-29T14:33:14.442+0530    done dumping test.products (3 documents)
+2025-04-29T14:33:14.449+0530    done dumping university.student (10 documents)
+
+C:\Users\mlm\Desktop\backup>mongorestore
+2025-04-29T14:43:14.362+0530    using default 'dump' directory
+2025-04-29T14:43:14.363+0530    preparing collections to restore from
+2025-04-29T14:43:14.364+0530    don't know what to do with file "dump\prelude.json", skipping...
+2025-04-29T14:43:14.365+0530    reading metadata for college.class from dump\college\class.metadata.json
+2025-04-29T14:43:14.365+0530    reading metadata for inventory.products from dump\inventory\products.metadata.json
+2025-04-29T14:43:14.366+0530    reading metadata for test.products from dump\test\products.metadata.json
+2025-04-29T14:43:14.366+0530    reading metadata for university.student from dump\university\student.metadata.json
+2025-04-29T14:43:14.368+0530    restoring to existing collection inventory.products without dropping
+2025-04-29T14:43:14.369+0530    restoring inventory.products from dump\inventory\products.bson
+2025-04-29T14:43:14.369+0530    restoring to existing collection college.class without dropping
+2025-04-29T14:43:14.370+0530    restoring college.class from dump\college\class.bson
+2025-04-29T14:43:14.375+0530    continuing through error: E11000 duplicate key error collection: inventory.products index: _id_ dup key: { _id: 2 }
+2025-04-29T14:43:14.375+0530    continuing through error: E11000 duplicate key error collection: inventory.products index: _id_ dup key: { _id: 3 }
+2025-04-29T14:43:14.376+0530    continuing through error: E11000 duplicate key error collection: inventory.products index: _id_ dup key: { _id: 1 }
+2025-04-29T14:43:14.377+0530    continuing through error: E11000 duplicate key error collection: college.class index: _id_ dup key: { _id: ObjectId('6807b744126169789cb5f899') }
+2025-04-29T14:43:14.377+0530    continuing through error: E11000 duplicate key error collection: college.class index: _id_ dup key: { _id: ObjectId('6807b744126169789cb5f89a') }
+2025-04-29T14:43:14.378+0530    continuing through error: E11000 duplicate key error collection: college.class index: _id_ dup key: { _id: ObjectId('68087081aa9d63245bb5f899') }
+2025-04-29T14:43:14.379+0530    continuing through error: E11000 duplicate key error collection: college.class index: _id_ dup key: { _id: ObjectId('68087081aa9d63245bb5f89a') }
+2025-04-29T14:43:14.381+0530    finished restoring inventory.products (0 documents, 3 failures)
+2025-04-29T14:43:14.381+0530    finished restoring college.class (0 documents, 4 failures)
+2025-04-29T14:43:14.405+0530    restoring university.student from dump\university\student.bson
+2025-04-29T14:43:14.413+0530    restoring test.products from dump\test\products.bson
+2025-04-29T14:43:14.415+0530    finished restoring university.student (10 documents, 0 failures)
+2025-04-29T14:43:14.424+0530    finished restoring test.products (3 documents, 0 failures)
+2025-04-29T14:43:14.424+0530    no indexes to restore for collection test.products
+2025-04-29T14:43:14.424+0530    no indexes to restore for collection inventory.products
+2025-04-29T14:43:14.426+0530    no indexes to restore for collection university.student
+2025-04-29T14:43:14.426+0530    no indexes to restore for collection college.class
+2025-04-29T14:43:14.427+0530    13 document(s) restored successfully. 7 document(s) failed to restore.
